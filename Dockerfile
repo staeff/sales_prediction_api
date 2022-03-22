@@ -1,6 +1,6 @@
 FROM python:3-slim
 # set a directory for the app
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY requirements.txt .
 # install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
@@ -8,5 +8,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 # tell the port number the container should expose
 EXPOSE 8080
-# run the command
-CMD ["python", "./app.py"]
+# replace APP_NAME with module name
+CMD ["gunicorn", "--bind", ":8080", "--workers", "2", "app:app"]
